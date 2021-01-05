@@ -5,4 +5,5 @@ public class MinesweeperModel {
 	//jakob test
 	// endnu en test
     //Aryan Test
+	// test til Aryan
 }
