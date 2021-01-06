@@ -43,6 +43,7 @@ public class MinesweeperView extends Application {
 		for (int i = 0; i < tiles.length; i++) {
 			for (int j = 0; j < tiles[i].length; j++) {
 				gPane.add(tiles[i][j], j, i);
+				//ew
 			}
 		}
 	}
