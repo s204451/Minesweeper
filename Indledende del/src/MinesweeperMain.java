@@ -1,4 +1,5 @@
 import javafx.application.Application;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
@@ -9,6 +10,7 @@ public class MinesweeperMain extends Application {
 
 	private GridPane gPane;
 	private static MinesweeperGame game;
+//	public static final int CANVAS_SIZE = 800;
 
 	public static void main(String[] args) {
 		try {
@@ -25,29 +27,31 @@ public class MinesweeperMain extends Application {
 		primaryStage.setTitle("Minesweeper");
 
 		gPane = new GridPane();
-		gPane.setPrefSize(800, 800);
-
+		int canvasWidth = 20 * MinesweeperGame.getGridWidth();
+		int canvasHeight = 20 * MinesweeperGame.getGridHeight();
+		gPane.setPrefSize(canvasWidth, canvasHeight);
+		
 		addTiles();
 
-		Scene scene = new Scene(gPane, 800, 800);
+		Scene scene = new Scene(gPane, canvasWidth, canvasHeight);
 		primaryStage.setScene(scene);
 
 		primaryStage.show();
 	}
 
 	public void addTiles() {
-		Tile[][] tiles = model.makeTiles();
+		Tile[][] tiles = game.makeTiles();
 
 		for (int i = 0; i < tiles.length; i++) {
 			for (int j = 0; j < tiles[i].length; j++) {
-				model.countMines(tiles, i, j);
+				game.countMines(tiles, j, i);
 			}
 		}
 
 		// Add tiles to GridPane
 		for (int i = 0; i < tiles.length; i++) {
 			for (int j = 0; j < tiles[i].length; j++) {
-				gPane.add(tiles[i][j], i, j);
+				gPane.add(tiles[i][j], j, i);
 			}
 		}
 	}

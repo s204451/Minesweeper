@@ -1,14 +1,8 @@
 
 public class MinesweeperGame {
-	private int gridWidth;
-	private int gridHeight;
-	private int nMines;
-
-	public MinesweeperGame() {
-		this.gridWidth = 10;
-		this.gridHeight = 10;
-		this.nMines = 10;
-	}
+	public static int gridWidth;
+	public static int gridHeight;
+	public static int nMines;
 
 	public MinesweeperGame(int gridWidth, int gridHeight, int nMines) {
 		this.gridWidth = gridWidth;
@@ -16,15 +10,15 @@ public class MinesweeperGame {
 		this.nMines = nMines;
 	}
 
-	public int getGridWidth() {
+	public static int getGridWidth() {
 		return gridWidth;
 	}
 
-	public int getGridHeight() {
+	public static int getGridHeight() {
 		return gridHeight;
 	}
 
-	public int getnMines() {
+	public static int getnMines() {
 		return nMines;
 	}
 	
@@ -43,8 +37,8 @@ public class MinesweeperGame {
 		for (int i = 0; i < nMines; i++) {
 			int x = (int) (Math.random() * (gridWidth));
 			int y = (int) (Math.random() * (gridHeight));
-			if (!tiles[x][y].hasMine()) {
-				tiles[x][y].addMine();
+			if (!tiles[y][x].hasMine()) {
+				tiles[y][x].addMine();
 			} else {
 				i--;
 			}
@@ -54,7 +48,7 @@ public class MinesweeperGame {
 	}
 
 	public void countMines(Tile[][] tiles, int x, int y) {
-		if (tiles[x][y].hasMine()) return;
+		if (tiles[y][x].hasMine()) return;
 		
 		int count = 0;
 		for (int i = -1; i <= 1; i++) {
@@ -63,13 +57,13 @@ public class MinesweeperGame {
 					int currentX = x + i;
 					int currentY = y + j;
 					if (currentX >= 0 && currentX < gridWidth && currentY >= 0 && currentY < gridHeight) {
-						if (tiles[currentX][currentY].hasMine())
+						if (tiles[currentY][currentX].hasMine())
 							count++;
 					}
 				}
 			}
 		}
-		tiles[x][y].setMinesNear(count);
+		tiles[y][x].setMinesNear(count);
 	}
 	
 
