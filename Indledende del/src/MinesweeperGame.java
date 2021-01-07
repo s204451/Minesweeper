@@ -1,16 +1,16 @@
 
-public class MinesweeperModel {
+public class MinesweeperGame {
 	private int gridWidth;
 	private int gridHeight;
 	private int nMines;
 
-	public MinesweeperModel() {
+	public MinesweeperGame() {
 		this.gridWidth = 10;
 		this.gridHeight = 10;
 		this.nMines = 10;
 	}
 
-	public MinesweeperModel(int gridWidth, int gridHeight, int nMines) {
+	public MinesweeperGame(int gridWidth, int gridHeight, int nMines) {
 		this.gridWidth = gridWidth;
 		this.gridHeight = gridHeight;
 		this.nMines = nMines;
@@ -27,6 +27,7 @@ public class MinesweeperModel {
 	public int getnMines() {
 		return nMines;
 	}
+	
 	
 	public Tile[][] makeTiles() {
 		// Initialize tiles
@@ -62,13 +63,13 @@ public class MinesweeperModel {
 					int currentX = x + i;
 					int currentY = y + j;
 					if (currentX >= 0 && currentX < gridWidth && currentY >= 0 && currentY < gridHeight) {
-						if (tiles[currentY][currentX].hasMine())
+						if (tiles[currentX][currentY].hasMine())
 							count++;
 					}
 				}
 			}
 		}
-		tiles[y][x].setMinesNear(count);
+		tiles[x][y].setMinesNear(count);
 	}
 	
 
