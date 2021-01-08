@@ -1,42 +1,64 @@
 import javafx.application.Application;
-import javafx.geometry.Insets;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-//Example: java MinesweeperMain 10 10 20
 
 public class MinesweeperMain extends Application {
 
+	private StackPane root;
 	private GridPane gPane;
 	private static MinesweeperGame game;
-//	public static final int CANVAS_SIZE = 800;
 
 	public static void main(String[] args) {
 		try {
 			game = getGame(args);
+			launch();
 		} catch (IllegalArgumentException e) {
 			System.out.println(e.getMessage());
+			System.exit(0);
 		}
-		launch();
 	}
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
+		
+		game.addMain(this);
 
 		primaryStage.setTitle("Minesweeper");
+		primaryStage.setResizable(false);
 
+		root = new StackPane();
 		gPane = new GridPane();
 		int canvasWidth = 20 * MinesweeperGame.getGridWidth();
 		int canvasHeight = 20 * MinesweeperGame.getGridHeight();
 		gPane.setPrefSize(canvasWidth, canvasHeight);
 		
+		root.getChildren().add(gPane);
+		root.setOnMouseClicked(e -> MinesweeperGame.checkForWin());
+
 		addTiles();
 
-		Scene scene = new Scene(gPane, canvasWidth, canvasHeight);
+		Scene scene = new Scene(root, canvasWidth, canvasHeight);
 		primaryStage.setScene(scene);
 
 		primaryStage.show();
+	}
+	
+	public Tile[][] getTiles() {
+		Tile[][] tiles = new Tile[MinesweeperGame.getGridHeight()][MinesweeperGame.getGridWidth()];
+		for (Node node : gPane.getChildren()) {
+			int y = GridPane.getRowIndex(node);
+			int x = GridPane.getColumnIndex(node);
+			
+			tiles[y][x] = (Tile) node;
+		}
+		return tiles;
 	}
 
 	public void addTiles() {
@@ -55,22 +77,38 @@ public class MinesweeperMain extends Application {
 			}
 		}
 	}
-
+	
+	//Validates arguments and contructs game
 	public static MinesweeperGame getGame(String[] args) throws IllegalArgumentException {
 		MinesweeperGame game = null;
-		int width = Integer.parseInt(args[0]);
-		int height = Integer.parseInt(args[1]);
-		int mines = Integer.parseInt(args[2]);
+		
+		int width, height, mines;
 		
 		try {
-			if (width < 0 && height < 0 && mines <= 0) {
-				throw new IllegalArgumentException("Arguments must be positive integers");
+			width = Integer.parseInt(args[0]);
+			height = Integer.parseInt(args[1]);
+			mines = Integer.parseInt(args[2]);
+	
+			if (width < 4 || width > 99 || height < 4 || height > 99 || mines < 1 || mines >= width * height) {
+				throw new IllegalArgumentException("Arguments must be on format: width (4 to 99), height (4 to 99), mines (1 to area - 1).");
 			}
-			} catch (NumberFormatException e) {
-				throw new IllegalArgumentException("Arguments must be positive integers");
-			}
+			
+		} catch (NumberFormatException e) {
+			throw new IllegalArgumentException("Arguments must be integers!");
+		}
 		game = new MinesweeperGame(width, height, mines);
 		return game;
+	}
+	
+	public void stopGame() {
+		gPane.setDisable(true);
+	}
+	
+	public void textWon(){
+		Text won = new Text("You Won!");
+		won.setFont(new Font("Impact", MinesweeperGame.getGridWidth() * 4));
+		won.setFill(Color.RED);
+		root.getChildren().add(won);
 	}
 
 }

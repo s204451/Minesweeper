@@ -11,24 +11,21 @@ import javafx.scene.text.Text;
 public class Tile extends StackPane {
 	private int minesNear;
 	private boolean hasMine;
+	private boolean hasFlag;
 	private Text text;
 	private Ellipse mine;
 	private Ellipse flag;
+	private Rectangle border;
 	private Rectangle rect;
 
 	public Tile() {
 		this.setPrefSize(20, 20);
 
-		Rectangle border = new Rectangle(this.getPrefWidth() - 1, this.getPrefWidth() - 1);
+		border = new Rectangle(this.getPrefWidth() - 1, this.getPrefWidth() - 1);
 		border.setFill(Color.rgb(150, 150, 150));
 		border.setStroke(Color.BLACK);
 
-		/*
-		 * DropShadow ds = new DropShadow(); ds.setOffsetY(4.0f);
-		 * ds.setColor(Color.color(0.4f, 0.4f, 0.4f)); border.setEffect(ds);
-		 */
-
-		rect = new Rectangle(this.getPrefWidth() - 2.5, this.getPrefWidth() - 2.5);
+		rect = new Rectangle(this.getPrefWidth() - 2, this.getPrefWidth() - 2);
 		rect.setFill(Color.rgb(198, 198, 198));
 		StackPane.setAlignment(rect, Pos.TOP_LEFT);
 
@@ -52,6 +49,11 @@ public class Tile extends StackPane {
 	public boolean hasMine() {
 		return hasMine;
 	}
+	
+	
+	public boolean isRectVisible() {
+		return rect.isVisible();
+	}
 
 	public void addFlag() {
 		flag = new Ellipse(this.getPrefWidth() * 0.5, this.getPrefHeight() * 0.5, this.getPrefWidth() * 0.25,
@@ -59,16 +61,29 @@ public class Tile extends StackPane {
 		flag.setFill(Color.rgb(0, 143, 15));
 		flag.setVisible(false);
 		this.getChildren().add(flag);
+		hasFlag = true;
+
+	}
+	
+	public void wrongFlag() {
+		if(mine == null && hasFlag){
+			flag.setFill(Color.RED);
+		}
 	}
 
 	public void makeVisible() {
-		rect.setVisible(false);
-		if (mine != null)
-			mine.setVisible(true);
-		if (text != null)
-			text.setVisible(true);
-		if (flag.isVisible())
-			flag.setVisible(false);
+		if (rect.isVisible() && !flag.isVisible()) {
+			rect.setVisible(false);
+			if (mine != null) {
+				mine.setVisible(true);
+				if (!MinesweeperGame.gameOver) {
+					border.setFill(Color.RED);
+					MinesweeperGame.gameOver();
+				}
+			}
+			if (text != null)
+				text.setVisible(true);
+		}
 	}
 
 	public void addMine() {
@@ -81,7 +96,7 @@ public class Tile extends StackPane {
 
 		this.getChildren().add(mine);
 	}
-
+	
 	public void setMinesNear(int minesNear) {
 		this.minesNear = minesNear;
 
