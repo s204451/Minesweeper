@@ -9,7 +9,6 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 public class Tile extends StackPane {
-	private int minesNear;
 	private boolean hasMine;
 	private boolean hasFlag;
 	private Text text;
@@ -98,8 +97,6 @@ public class Tile extends StackPane {
 	}
 	
 	public void setMinesNear(int minesNear) {
-		this.minesNear = minesNear;
-
 		if (minesNear > 0) {
 			DropShadow ds = new DropShadow();
 			ds.setOffsetY(3.0f);
@@ -141,8 +138,6 @@ public class Tile extends StackPane {
 			}
 
 			text.setVisible(false);
-
 		}
-
 	}
 }

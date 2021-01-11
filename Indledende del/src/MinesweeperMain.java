@@ -13,7 +13,6 @@ public class MinesweeperMain extends Application {
 
 	private StackPane root;
 	private GridPane gPane;
-//	private static MinesweeperGame game;
 
 	public static void main(String[] args) {
 		try {
@@ -87,16 +86,15 @@ public class MinesweeperMain extends Application {
 			height = Integer.parseInt(args[1]);
 			mines = Integer.parseInt(args[2]);
 	
-			if (width < 4 || width > 99 || height < 4 || height > 99 || mines < 1 || mines >= width * height) {
-				throw new IllegalArgumentException("Arguments must be on format: width (4 to 99), height (4 to 99), mines (1 to area - 1).");
+			if (width < 4 || width > 100 || height < 4 || height > 100 || mines < 1 || mines >= width * height) {
+				throw new IllegalArgumentException("Arguments must be on format: width (4 to 100), height (4 to 100), mines (1 to area - 1).");
 			}
 			
 		} catch (NumberFormatException e) {
 			throw new IllegalArgumentException("Arguments must be integers!");
 		}
-		MinesweeperGame.constructGame(width, height, mines);
 		
-//		game = MinesweeperGame(width, height, mines);
+		MinesweeperGame.constructGame(width, height, mines);
 	}
 	
 	public void stopGame() {
@@ -104,10 +102,10 @@ public class MinesweeperMain extends Application {
 	}
 	
 	public void textWon(){
-		Text won = new Text("You Won!");
-		won.setFont(new Font("Impact", MinesweeperGame.getGridWidth() * 4));
-		won.setFill(Color.RED);
-		root.getChildren().add(won);
+		Text wonText = new Text("You Won!");
+		wonText.setFont(new Font("Impact", MinesweeperGame.getGridWidth() * 4));
+		wonText.setFill(Color.RED);
+		root.getChildren().add(wonText);
 	}
 
 }

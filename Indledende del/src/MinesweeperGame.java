@@ -6,12 +6,6 @@ public final class MinesweeperGame {
 	private static boolean gameOver;
 	private static MinesweeperMain main;
 
-//	MinesweeperGame(int gridWidth, int gridHeight, int nMines) {
-//		this.gridWidth = gridWidth;
-//		this.gridHeight = gridHeight;
-//		this.nMines = nMines;
-//	}
-	
 	public static void constructGame(int gridWidth_, int gridHeight_, int nMines_) {
 		gridWidth = gridWidth_;
 		gridHeight = gridHeight_;
