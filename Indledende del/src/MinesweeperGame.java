@@ -1,19 +1,29 @@
 
-public class MinesweeperGame {
+public final class MinesweeperGame {
 	private static int gridWidth;
 	private static int gridHeight;
 	private static int nMines;
-	public static boolean gameOver;
-	public static MinesweeperMain main;
+	private static boolean gameOver;
+	private static MinesweeperMain main;
 
-	public MinesweeperGame(int gridWidth, int gridHeight, int nMines) {
-		this.gridWidth = gridWidth;
-		this.gridHeight = gridHeight;
-		this.nMines = nMines;
+//	MinesweeperGame(int gridWidth, int gridHeight, int nMines) {
+//		this.gridWidth = gridWidth;
+//		this.gridHeight = gridHeight;
+//		this.nMines = nMines;
+//	}
+	
+	public static void constructGame(int gridWidth_, int gridHeight_, int nMines_) {
+		gridWidth = gridWidth_;
+		gridHeight = gridHeight_;
+		nMines = nMines_;
 	}
 
-	public void addMain(MinesweeperMain main) {
-		this.main = main;
+	public static void setMain(MinesweeperMain main_) {
+		main = main_;
+	}
+	
+	public static boolean isGameOver() {
+		return gameOver;
 	}
 
 	public static int getGridWidth() {
@@ -22,10 +32,6 @@ public class MinesweeperGame {
 
 	public static int getGridHeight() {
 		return gridHeight;
-	}
-
-	public static int getnMines() {
-		return nMines;
 	}
 
 	public static Tile[][] makeTiles() {
@@ -51,7 +57,7 @@ public class MinesweeperGame {
 		return tiles;
 	}
 	
-	public void countMines(Tile[][] tiles, int x, int y) {
+	public static void countMines(Tile[][] tiles, int x, int y) {
 		if (tiles[y][x].hasMine())
 			return;
 

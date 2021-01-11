@@ -15,21 +15,21 @@ public class Tile extends StackPane {
 	private Text text;
 	private Ellipse mine;
 	private Ellipse flag;
-	private Rectangle border;
-	private Rectangle rect;
+	private Rectangle innerRect;
+	private Rectangle outerRect;
 
 	public Tile() {
 		this.setPrefSize(20, 20);
 
-		border = new Rectangle(this.getPrefWidth() - 1, this.getPrefWidth() - 1);
-		border.setFill(Color.rgb(150, 150, 150));
-		border.setStroke(Color.BLACK);
+		innerRect = new Rectangle(this.getPrefWidth() - 1, this.getPrefWidth() - 1);
+		innerRect.setFill(Color.rgb(150, 150, 150));
+		innerRect.setStroke(Color.BLACK);
 
-		rect = new Rectangle(this.getPrefWidth() - 2, this.getPrefWidth() - 2);
-		rect.setFill(Color.rgb(198, 198, 198));
-		StackPane.setAlignment(rect, Pos.TOP_LEFT);
+		outerRect = new Rectangle(this.getPrefWidth() - 2, this.getPrefWidth() - 2);
+		outerRect.setFill(Color.rgb(198, 198, 198));
+		StackPane.setAlignment(outerRect, Pos.TOP_LEFT);
 
-		this.getChildren().addAll(border, rect);
+		this.getChildren().addAll(innerRect, outerRect);
 
 		addFlag();
 
@@ -40,7 +40,7 @@ public class Tile extends StackPane {
 		if (e.getButton() == MouseButton.PRIMARY) {
 			makeVisible();
 		} else if (e.getButton() == MouseButton.SECONDARY) {
-			if (rect.isVisible()) {
+			if (outerRect.isVisible()) {
 				flag.setVisible(!flag.isVisible());
 			}
 		}
@@ -52,7 +52,7 @@ public class Tile extends StackPane {
 	
 	
 	public boolean isRectVisible() {
-		return rect.isVisible();
+		return outerRect.isVisible();
 	}
 
 	public void addFlag() {
@@ -72,12 +72,12 @@ public class Tile extends StackPane {
 	}
 
 	public void makeVisible() {
-		if (rect.isVisible() && !flag.isVisible()) {
-			rect.setVisible(false);
+		if (outerRect.isVisible() && !flag.isVisible()) {
+			outerRect.setVisible(false);
 			if (mine != null) {
 				mine.setVisible(true);
-				if (!MinesweeperGame.gameOver) {
-					border.setFill(Color.RED);
+				if (!MinesweeperGame.isGameOver()) {
+					innerRect.setFill(Color.RED);
 					MinesweeperGame.gameOver();
 				}
 			}

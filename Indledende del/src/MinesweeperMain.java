@@ -13,11 +13,11 @@ public class MinesweeperMain extends Application {
 
 	private StackPane root;
 	private GridPane gPane;
-	private static MinesweeperGame game;
+//	private static MinesweeperGame game;
 
 	public static void main(String[] args) {
 		try {
-			game = getGame(args);
+			createGame(args);
 			launch();
 		} catch (IllegalArgumentException e) {
 			System.out.println(e.getMessage());
@@ -26,9 +26,9 @@ public class MinesweeperMain extends Application {
 	}
 
 	@Override
-	public void start(Stage primaryStage) throws Exception {
+	public void start(Stage primaryStage) {
 		
-		game.addMain(this);
+		MinesweeperGame.setMain(this);
 
 		primaryStage.setTitle("Minesweeper");
 		primaryStage.setResizable(false);
@@ -62,11 +62,11 @@ public class MinesweeperMain extends Application {
 	}
 
 	public void addTiles() {
-		Tile[][] tiles = game.makeTiles();
+		Tile[][] tiles = MinesweeperGame.makeTiles();
 
 		for (int i = 0; i < tiles.length; i++) {
 			for (int j = 0; j < tiles[i].length; j++) {
-				game.countMines(tiles, j, i);
+				MinesweeperGame.countMines(tiles, j, i);
 			}
 		}
 
@@ -79,9 +79,7 @@ public class MinesweeperMain extends Application {
 	}
 	
 	//Validates arguments and contructs game
-	public static MinesweeperGame getGame(String[] args) throws IllegalArgumentException {
-		MinesweeperGame game = null;
-		
+	public static void createGame(String[] args) throws IllegalArgumentException {
 		int width, height, mines;
 		
 		try {
@@ -96,8 +94,9 @@ public class MinesweeperMain extends Application {
 		} catch (NumberFormatException e) {
 			throw new IllegalArgumentException("Arguments must be integers!");
 		}
-		game = new MinesweeperGame(width, height, mines);
-		return game;
+		MinesweeperGame.constructGame(width, height, mines);
+		
+//		game = MinesweeperGame(width, height, mines);
 	}
 	
 	public void stopGame() {
