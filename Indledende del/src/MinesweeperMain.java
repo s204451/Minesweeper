@@ -39,7 +39,6 @@ public class MinesweeperMain extends Application {
 		gPane.setPrefSize(canvasWidth, canvasHeight);
 		
 		root.getChildren().add(gPane);
-		root.setOnMouseClicked(e -> MinesweeperGame.checkForWin());
 
 		addTiles();
 
@@ -63,11 +62,7 @@ public class MinesweeperMain extends Application {
 	public void addTiles() {
 		Tile[][] tiles = MinesweeperGame.makeTiles();
 
-		for (int i = 0; i < tiles.length; i++) {
-			for (int j = 0; j < tiles[i].length; j++) {
-				MinesweeperGame.countMines(tiles, j, i);
-			}
-		}
+		MinesweeperGame.addMineCount(tiles);
 
 		// Add tiles to GridPane
 		for (int i = 0; i < tiles.length; i++) {
@@ -77,7 +72,7 @@ public class MinesweeperMain extends Application {
 		}
 	}
 	
-	//Validates arguments and contructs game
+	// Validates arguments and constructs game
 	public static void createGame(String[] args) throws IllegalArgumentException {
 		int width, height, mines;
 		
@@ -101,7 +96,7 @@ public class MinesweeperMain extends Application {
 		gPane.setDisable(true);
 	}
 	
-	public void textWon(){
+	public void displayWonText(){
 		Text wonText = new Text("You Won!");
 		wonText.setFont(new Font("Impact", MinesweeperGame.getGridWidth() * 4));
 		wonText.setFill(Color.RED);

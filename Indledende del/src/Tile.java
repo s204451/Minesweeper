@@ -1,6 +1,6 @@
 import javafx.geometry.Pos;
-import javafx.scene.effect.DropShadow;
 import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Ellipse;
@@ -35,9 +35,10 @@ public class Tile extends StackPane {
 		this.setOnMouseClicked(e -> handleClicked(e));
 	}
 
-	private void handleClicked(javafx.scene.input.MouseEvent e) {
+	private void handleClicked(MouseEvent e) {
 		if (e.getButton() == MouseButton.PRIMARY) {
 			makeVisible();
+			MinesweeperGame.checkForWin();
 		} else if (e.getButton() == MouseButton.SECONDARY) {
 			if (outerRect.isVisible()) {
 				flag.setVisible(!flag.isVisible());
@@ -64,7 +65,7 @@ public class Tile extends StackPane {
 
 	}
 	
-	public void wrongFlag() {
+	public void displayWrongFlag() {
 		if(mine == null && hasFlag){
 			flag.setFill(Color.RED);
 		}
@@ -98,13 +99,8 @@ public class Tile extends StackPane {
 	
 	public void setMinesNear(int minesNear) {
 		if (minesNear > 0) {
-			DropShadow ds = new DropShadow();
-			ds.setOffsetY(3.0f);
-			ds.setColor(Color.color(0.4f, 0.4f, 0.4f));
 
 			text = new Text("" + minesNear);
-
-			text.setEffect(ds);
 
 			this.getChildren().add(text);
 
@@ -140,4 +136,5 @@ public class Tile extends StackPane {
 			text.setVisible(false);
 		}
 	}
+	
 }

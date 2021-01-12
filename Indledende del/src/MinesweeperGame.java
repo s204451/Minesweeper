@@ -15,7 +15,7 @@ public final class MinesweeperGame {
 	public static void setMain(MinesweeperMain main_) {
 		main = main_;
 	}
-	
+
 	public static boolean isGameOver() {
 		return gameOver;
 	}
@@ -50,25 +50,29 @@ public final class MinesweeperGame {
 
 		return tiles;
 	}
-	
-	public static void countMines(Tile[][] tiles, int x, int y) {
-		if (tiles[y][x].hasMine())
-			return;
 
-		int count = 0;
-		for (int i = -1; i <= 1; i++) {
-			for (int j = -1; j <= 1; j++) {
-				if (!(i == 0 && j == 0)) {
-					int currentX = x + i;
-					int currentY = y + j;
-					if (currentX >= 0 && currentX < gridWidth && currentY >= 0 && currentY < gridHeight) {
-						if (tiles[currentY][currentX].hasMine())
-							count++;
+	public static void addMineCount(Tile[][] tiles) {
+		for (int y = 0; y < tiles.length; y++) {
+			for (int x = 0; x < tiles[y].length; x++) {
+				if (!tiles[y][x].hasMine()) {
+
+					int count = 0;
+					for (int i = -1; i <= 1; i++) {
+						for (int j = -1; j <= 1; j++) {
+							if (!(i == 0 && j == 0)) {
+								int currentX = x + i;
+								int currentY = y + j;
+								if (currentX >= 0 && currentX < gridWidth && currentY >= 0 && currentY < gridHeight) {
+									if (tiles[currentY][currentX].hasMine())
+										count++;
+								}
+							}
+						}
 					}
+					tiles[y][x].setMinesNear(count);
 				}
 			}
 		}
-		tiles[y][x].setMinesNear(count);
 	}
 
 	public static void checkForWin() {
@@ -83,7 +87,7 @@ public final class MinesweeperGame {
 				}
 			}
 			if (counter == 0) {
-				main.textWon();
+				main.displayWonText();
 				main.stopGame();
 			}
 		}
@@ -97,8 +101,8 @@ public final class MinesweeperGame {
 		for (int i = 0; i < tiles.length; i++) {
 			for (int j = 0; j < tiles[i].length; j++) {
 				tiles[i][j].makeVisible();
-				tiles[i][j].wrongFlag();
-				
+				tiles[i][j].displayWrongFlag();
+
 			}
 		}
 		main.stopGame();
