@@ -7,14 +7,14 @@ public final class MinesweeperGame {
 	private static boolean gameOver;
 	private static MinesweeperMain main;
 
-	public static void constructGame(int gridWidth_, int gridHeight_, int nMines_) {
-		gridWidth = gridWidth_;
-		gridHeight = gridHeight_;
-		nMines = nMines_;
+	public static void constructGame(int gridWidth, int gridHeight, int nMines) {
+		MinesweeperGame.gridWidth = gridWidth;
+		MinesweeperGame.gridHeight = gridHeight;
+		MinesweeperGame.nMines = nMines;
 	}
 
-	public static void setMain(MinesweeperMain main_) {
-		main = main_;
+	public static void setMain(MinesweeperMain main) {
+		MinesweeperGame.main = main;
 	}
 
 	public static boolean isGameOver() {

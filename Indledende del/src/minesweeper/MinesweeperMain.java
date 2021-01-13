@@ -98,7 +98,7 @@ public class MinesweeperMain extends Application {
 	}
 	
 	public void stopGame() {
-		gPane.setDisable(true);
+		root.setDisable(true);
 	}
 	
 	public void displayWonText(){
