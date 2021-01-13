@@ -19,7 +19,7 @@ public class MinesweeperMain extends Application {
 			createGame(args);
 			launch();
 		} catch (IllegalArgumentException e) {
-			System.out.println(e.getMessage());
+			System.out.println("\nFail: " + e.getMessage());
 			System.exit(0);
 		}
 	}
@@ -77,10 +77,14 @@ public class MinesweeperMain extends Application {
 		int width, height, mines;
 		
 		try {
+			if (args.length != 3) {
+			throw new IllegalArgumentException("Arguments must be on format: width (4 to 
+                         100), height (4 to 100), mines (1 to area - 1).");
+			}
+
 			width = Integer.parseInt(args[0]);
 			height = Integer.parseInt(args[1]);
 			mines = Integer.parseInt(args[2]);
-	
 			if (width < 4 || width > 100 || height < 4 || height > 100 || mines < 1 || mines >= width * height) {
 				throw new IllegalArgumentException("Arguments must be on format: width (4 to 100), height (4 to 100), mines (1 to area - 1).");
 			}
