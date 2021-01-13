@@ -1,3 +1,5 @@
+package minesweeper;
+
 import javafx.application.Application;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -78,8 +80,7 @@ public class MinesweeperMain extends Application {
 		
 		try {
 			if (args.length != 3) {
-			throw new IllegalArgumentException("Arguments must be on format: width (4 to 
-                         100), height (4 to 100), mines (1 to area - 1).");
+			throw new IllegalArgumentException("Arguments must be on format: width (4 to 100), height (4 to 100), mines (1 to area - 1).");
 			}
 
 			width = Integer.parseInt(args[0]);

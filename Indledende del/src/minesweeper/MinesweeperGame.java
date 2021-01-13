@@ -1,3 +1,4 @@
+package minesweeper;
 
 public final class MinesweeperGame {
 	private static int gridWidth;
