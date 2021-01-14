@@ -63,7 +63,7 @@ public class MinesweeperMain extends Application {
 
 	public void addTiles() {
 		Tile[][] tiles = MinesweeperGame.makeTiles();
-
+		
 		// Add tiles to GridPane
 		for (int i = 0; i < tiles.length; i++) {
 			for (int j = 0; j < tiles[i].length; j++) {
@@ -78,14 +78,14 @@ public class MinesweeperMain extends Application {
 		
 		try {
 			if (args.length != 3) {
-				throw new IllegalArgumentException("Arguments must be on format: width (4 to 100), height (4 to 100), mines (1 to area - 1).");
+				throw new IllegalArgumentException("Arguments must be on format: width (4 to 100), height (4 to 100), mines (1 to area - 9).");
 			}
 
 			width = Integer.parseInt(args[0]);
 			height = Integer.parseInt(args[1]);
 			mines = Integer.parseInt(args[2]);
-			if (width < 4 || width > 100 || height < 4 || height > 100 || mines < 1 || mines >= width * height) {
-				throw new IllegalArgumentException("Arguments must be on format: width (4 to 100), height (4 to 100), mines (1 to area - 1).");
+			if (width < 4 || width > 100 || height < 4 || height > 100 || mines < 1 || mines > width * height - 9) {
+				throw new IllegalArgumentException("Arguments must be on format: width (4 to 100), height (4 to 100), mines (1 to area - 9).");
 			}
 			
 		} catch (NumberFormatException e) {

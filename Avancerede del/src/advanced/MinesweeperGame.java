@@ -1,6 +1,7 @@
 package advanced;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public final class MinesweeperGame {
 	private static int gridWidth;
@@ -35,7 +36,8 @@ public final class MinesweeperGame {
 	public static boolean hasPlacedMines() {
 		return hasPlacedMines;
 	}
-
+	
+	
 	// Initialize tiles
 	public static Tile[][] makeTiles() {
 		Tile[][] tiles = new Tile[gridHeight][gridWidth];
@@ -44,11 +46,17 @@ public final class MinesweeperGame {
 				tiles[i][j] = new Tile(j, i);
 			}
 		}
+		
+		for (int i = 0; i < tiles.length; i++) {
+			for (int j = 0; j < tiles[i].length; j++) {
+				setTileNeighbours(tiles, j, i);
+			}
+		}
 
 		return tiles;
 	}
 
-	public static void placeMines() {
+	public static void placeMines(int pressedX, int pressedY) {
 		Tile[][] tiles = main.getTiles();
 
 		// Place mines
@@ -56,18 +64,8 @@ public final class MinesweeperGame {
 			int x = (int) (Math.random() * (gridWidth));
 			int y = (int) (Math.random() * (gridHeight));
 
-//			boolean isBlank = true;
-//			for (int i = -1; i <= 1; i++) {
-//				for (int j = -1; j <= 1; j++) {
-//					if (i >= 0 && i < gridWidth && j >= 0 && j < gridHeight) {
-//						if (tiles[x + i][y + j].hasMine()) {
-//							isBlank = false;
-//							break;
-//						}
-//					}
-//				}
-//			}
-			if (!tiles[y][x].hasMine()) {
+			// All surrounding mines from first pressed tile can't have a mine
+			if (!tiles[y][x].hasMine() && !(Math.abs(x - pressedX) <= 1 && Math.abs(y - pressedY) <= 1)) {
 				tiles[y][x].addMine();
 			} else {
 				n--;
@@ -79,38 +77,26 @@ public final class MinesweeperGame {
 
 	public static void addMineCount() {
 		Tile[][] tiles = main.getTiles();
-		
+
 		for (int y = 0; y < tiles.length; y++) {
 			for (int x = 0; x < tiles[y].length; x++) {
 				if (!tiles[y][x].hasMine()) {
 
 					int count = 0;
-					
-					ArrayList<Tile> neighbours = getNeighbours(tiles, x, y);
-					for (Tile neighbour : neighbours) {
-						if (neighbour.hasMine()) count++;
-					}
 
-					tiles[y][x].setMinesNear(count);
+					List<Tile> neighbours = tiles[y][x].getNeighbours();
+					for (Tile neighbour : neighbours) {
+						if (neighbour.hasMine())
+							count++;
+					}
+				tiles[y][x].setMinesNear(count);
 				}
 			}
 		}
 	}
 
-//	public static void countNeighbourMines(Tile tile, int x, int y) {
-//		int count = 0;
-//		int diffX = Math.abs(x-tile.getX());
-//		int diffY = Math.abs(y-tile.getY());
-//		
-//		while(diffX < 2 && diffY < 2 && diffX+diffY > 0) {
-//			count++;
-//		}
-//		
-//		tile[y][x].setMinesNear(count);	
-//	}
-
-	public static ArrayList<Tile> getNeighbours(Tile[][] tiles, int x, int y) {
-		ArrayList<Tile> neighbours = new ArrayList<Tile>();
+	public static void setTileNeighbours(Tile[][] tiles, int x, int y) {
+		List<Tile> neighbours = new ArrayList<Tile>();
 
 		for (int i = -1; i <= 1; i++) {
 			for (int j = -1; j <= 1; j++) {
@@ -118,22 +104,24 @@ public final class MinesweeperGame {
 					int currentX = x + i;
 					int currentY = y + j;
 					if (currentX >= 0 && currentX < gridWidth && currentY >= 0 && currentY < gridHeight) {
-						neighbours.add(tiles[currentX][currentY]);
+						neighbours.add(tiles[currentY][currentX]);
 					}
 				}
 			}
 		}
-
-		return neighbours;
+		tiles[y][x].setNeighbours(neighbours);
 	}
 
-//	public static void revealNonMines(int x, int y) {
-//	Tile[][] tiles = main.getTiles()
-//		if(!tiles[x][y].hasMine()){
-//		tiles[x][y].makeVisible();
-//		}
-//		
-//
+	public static void revealNonMines(int x, int y) {
+	
+	Tile[][] tiles = main.getTiles();
+	List<Tile> neighbours = tiles[y][x].getNeighbours();
+		for (Tile neighbour : neighbours) {
+			if (neighbour.isRectVisible()) {
+				neighbour.makeVisible();
+			}
+		}
+	}
 
 	public static void checkForWin() {
 		if (!gameOver) {
@@ -167,5 +155,4 @@ public final class MinesweeperGame {
 		}
 		main.stopGame();
 	}
-
 }
