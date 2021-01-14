@@ -1,4 +1,4 @@
-package src.advanced;
+package advanced;
 
 public class Launcher {
 

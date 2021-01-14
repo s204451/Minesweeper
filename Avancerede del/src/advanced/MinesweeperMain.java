@@ -1,4 +1,4 @@
-package src.advanced;
+package advanced;
 
 import javafx.application.Application;
 import javafx.scene.Node;
@@ -63,8 +63,6 @@ public class MinesweeperMain extends Application {
 
 	public void addTiles() {
 		Tile[][] tiles = MinesweeperGame.makeTiles();
-
-		MinesweeperGame.addMineCount(tiles);
 
 		// Add tiles to GridPane
 		for (int i = 0; i < tiles.length; i++) {

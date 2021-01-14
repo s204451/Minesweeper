@@ -1,6 +1,11 @@
-package src.advanced;
+package advanced;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 
 import javafx.geometry.Pos;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
@@ -8,18 +13,24 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
-import javafx.scene.text.Text;
+import javafx.scene.text.Text; 
 
 public class Tile extends StackPane {
+	private int x, y;
 	private boolean hasMine;
+	private boolean isEmpty;
 	private boolean hasFlag;
 	private Text text;
 	private Ellipse mine;
 	private Ellipse flag;
+	private ImageView imageView;
 	private Rectangle innerRect;
 	private Rectangle outerRect;
 
-	public Tile() {
+	public Tile(int x, int y) {
+		this.x = x;
+		this.y = y;
+		
 		this.setPrefSize(20, 20);
 
 		innerRect = new Rectangle(this.getPrefWidth() - 1, this.getPrefWidth() - 1);
@@ -39,13 +50,31 @@ public class Tile extends StackPane {
 
 	private void handleClicked(MouseEvent e) {
 		if (e.getButton() == MouseButton.PRIMARY) {
+			if (!MinesweeperGame.hasPlacedMines()) {
+				MinesweeperGame.placeMines();
+				MinesweeperGame.addMineCount();
+			}
+			
 			makeVisible();
 			MinesweeperGame.checkForWin();
 		} else if (e.getButton() == MouseButton.SECONDARY) {
 			if (outerRect.isVisible()) {
-				flag.setVisible(!flag.isVisible());
+				imageView.setVisible(!imageView.isVisible());
+//				flag.setVisible(!flag.isVisible());
 			}
 		}
+	}
+	
+	public int getX(){
+		return x;
+	}
+	
+	public int getY(){
+		return y;
+	}
+	
+	public boolean isEmpty() {
+		return isEmpty;
 	}
 
 	public boolean hasMine() {
@@ -58,23 +87,36 @@ public class Tile extends StackPane {
 	}
 
 	public void addFlag() {
-		flag = new Ellipse(this.getPrefWidth() * 0.5, this.getPrefHeight() * 0.5, this.getPrefWidth() * 0.25,
-				this.getPrefHeight() * 0.45);
+		Image image;
+		try {
+			image = new Image(new FileInputStream("C:\\Users\\bjorn\\Dropbox\\Uni\\Prog\\Intro til Softwareteknologi\\3-Ugers projekt\\Minesweeper\\Avancerede del\\src\\advanced\\Flag-Transparent.png"));
+			imageView = new ImageView();
+			imageView.setImage(image);
+			imageView.setVisible(false);
+			this.getChildren().add(imageView);
+			hasFlag = true;
+		} catch (FileNotFoundException e) {
+			
+			e.printStackTrace();
+		}
+		
+		/*flag = new Ellipse(this.getPrefWidth() * 0.5, this.getPrefHeight() * 0.5, this.getPrefWidth() * 0.25,
+			this.getPrefHeight() * 0.45);
 		flag.setFill(Color.rgb(0, 143, 15));
 		flag.setVisible(false);
 		this.getChildren().add(flag);
-		hasFlag = true;
-
+		hasFlag = true;*/
 	}
 	
 	public void displayWrongFlag() {
 		if(mine == null && hasFlag){
-			flag.setFill(Color.RED);
+//			flag.setFill(Color.RED);
 		}
 	}
 
 	public void makeVisible() {
-		if (outerRect.isVisible() && !flag.isVisible()) {
+		
+		if (outerRect.isVisible() && !imageView.isVisible()) {
 			outerRect.setVisible(false);
 			if (mine != null) {
 				mine.setVisible(true);
@@ -136,7 +178,13 @@ public class Tile extends StackPane {
 			}
 
 			text.setVisible(false);
+		} else {
+			isEmpty = true;
 		}
 	}
+	
+	public void emptyNear(int x, int y) {
+		
+		}
 	
 }
