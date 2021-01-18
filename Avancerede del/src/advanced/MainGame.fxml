@@ -9,9 +9,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox fx:id="vBox" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="advanced.MainGameController">
+<VBox fx:id="vBox" style="-fx-background-color: rgb(80,80,80);" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="advanced.MainGameController">
    <children>
-        <Label fx:id="mineCounter" prefHeight="21.0" prefWidth="189.0" text="Mines left:">
+        <Label fx:id="mineCounter" prefHeight="21.0" prefWidth="189.0" text="MINES LEFT:" textFill="#ebdb00">
            <font>
                <Font name="Segoe UI Black" size="15.0" />
            </font>
@@ -25,7 +25,7 @@
        <StackPane fx:id="sPane" VBox.vgrow="ALWAYS" />
       <HBox>
          <children>
-                 <Button fx:id="menuButton" mnemonicParsing="false" prefHeight="0.0" prefWidth="53.0" text="Menu">
+                 <Button fx:id="menuButton" mnemonicParsing="false" onMouseClicked="#goBackToMenuButton" prefHeight="0.0" prefWidth="53.0" text="Menu">
                <font>
                   <Font size="13.0" />
                </font>

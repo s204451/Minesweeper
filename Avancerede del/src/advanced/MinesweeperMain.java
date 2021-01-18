@@ -1,18 +1,19 @@
 package advanced;
 
 import javafx.application.Application;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
+import javafx.stage.Stage;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import javafx.fxml.FXML;
+import javafx.scene.Node;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
-
 import java.io.IOException;
 
 
@@ -32,15 +33,19 @@ public class MinesweeperMain extends Application {
 	public void start(Stage primaryStage) throws Exception {
 
 		MinesweeperGame.setMain(this);
-		Parent mainRoot = FXMLLoader.load(getClass().getResource("MainGame.fxml"));
 
 		primaryStage.setTitle("Minesweeper");
 		primaryStage.setResizable(false);
+		Image logo = new Image("Flag.png");
+		primaryStage.getIcons().add(logo);
 
+		Parent mainRoot = FXMLLoader.load(getClass().getResource("MainGame.fxml"));
 		Scene mainScene = new Scene(mainRoot);
 
-		primaryStage.setScene(mainScene);
+		Parent mainMenu = FXMLLoader.load(getClass().getResource("MainMenu.fxml"));
+		Scene mainMenuScene = new Scene(mainMenu);
 
+		primaryStage.setScene(mainMenuScene);
 		primaryStage.show();
 	}
 
