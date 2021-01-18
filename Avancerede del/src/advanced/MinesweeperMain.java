@@ -7,7 +7,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 
-
 public class MinesweeperMain extends Application {
 
     public static void main(String[] args) {

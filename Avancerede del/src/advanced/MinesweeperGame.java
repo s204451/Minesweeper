@@ -176,5 +176,4 @@ public final class MinesweeperGame {
         }
         controller.stopGame();
     }
-
 }

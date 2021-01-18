@@ -99,3 +99,4 @@ public class GameController implements Initializable {
 		mineCounter.setText("MINES LEFT: " + minesLeft);
 	}
 }
+
