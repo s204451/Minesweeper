@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="500.0" style="-fx-background-color: beige;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="advanced.MainMenuController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="500.0" style="-fx-background-color: beige;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="advanced.MenuController">
    <children>
       <AnchorPane prefHeight="70.0" prefWidth="500.0">
          <children>
@@ -60,11 +60,23 @@
                   <Font name="Segoe UI Black" size="15.0" />
                </font>
             </Label>
-            <TextField fx:id="widthTextField" promptText="Insert Width">
-               <HBox.margin>
+            <VBox prefHeight="40.0" prefWidth="301.0">
+               <children>
+                  <TextField fx:id="widthTextField" maxHeight="25.0" maxWidth="149.0" prefHeight="25.0" prefWidth="149.0" promptText="Insert Width">
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                  </TextField>
+                  <Label fx:id="widthWarning" text="*Warning text" textFill="RED">
+                     <font>
+                        <Font name="System Bold Italic" size="11.0" />
+                     </font>
+                  </Label>
+               </children>
+               <padding>
                   <Insets left="34.0" />
-               </HBox.margin>
-            </TextField>
+               </padding>
+            </VBox>
          </children>
       </HBox>
       <HBox prefHeight="40.0" prefWidth="500.0">
@@ -77,11 +89,19 @@
                   <Font name="Segoe UI Black" size="15.0" />
                </font>
             </Label>
-            <TextField fx:id="heightTextField" promptText="Insert Height">
-               <HBox.margin>
+            <VBox prefHeight="40.0" prefWidth="301.0">
+               <children>
+                  <TextField fx:id="heightTextField" maxHeight="25.0" maxWidth="149.0" prefHeight="25.0" prefWidth="149.0" promptText="Insert Height" />
+                  <Label fx:id="heightWarning" text="*Warning text" textFill="RED">
+                     <font>
+                        <Font name="System Bold Italic" size="11.0" />
+                     </font>
+                  </Label>
+               </children>
+               <padding>
                   <Insets left="34.0" />
-               </HBox.margin>
-            </TextField>
+               </padding>
+            </VBox>
          </children>
       </HBox>
       <HBox prefHeight="40.0" prefWidth="500.0">
@@ -94,11 +114,19 @@
                   <Font name="Segoe UI Black" size="15.0" />
                </font>
             </Label>
-            <TextField fx:id="mineTextField" promptText="Insert number of Mines">
-               <HBox.margin>
-                  <Insets left="32.0" />
-               </HBox.margin>
-            </TextField>
+            <VBox prefHeight="40.0" prefWidth="301.0">
+               <children>
+                  <TextField fx:id="mineTextField" maxHeight="25.0" maxWidth="149.0" prefHeight="25.0" prefWidth="149.0" promptText="Insert number of Mines" />
+                  <Label fx:id="minesWarning" text="*Warning text" textFill="RED">
+                     <font>
+                        <Font name="System Bold Italic" size="11.0" />
+                     </font>
+                  </Label>
+               </children>
+               <padding>
+                  <Insets left="34.0" />
+               </padding>
+            </VBox>
          </children>
       </HBox>
       <Button fx:id="playButton" mnemonicParsing="false" onMouseClicked="#playGame" prefHeight="42.0" prefWidth="86.0" textAlignment="CENTER">
@@ -116,13 +144,5 @@
             </ImageView>
          </graphic>
       </Button>
-      <Label fx:id="warningLabel" prefHeight="17.0" prefWidth="421.0" text="*Please choose a pre-defined game mode or insert a grid size between 4 - 100" textAlignment="CENTER">
-         <font>
-            <Font name="Segoe UI Black Italic" size="11.0" />
-         </font>
-         <VBox.margin>
-            <Insets left="40.0" top="7.0" />
-         </VBox.margin>
-      </Label>
    </children>
 </VBox>

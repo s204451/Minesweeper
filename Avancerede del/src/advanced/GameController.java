@@ -6,16 +6,12 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Ellipse;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -24,14 +20,12 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class MainGameController implements Initializable {
+public class GameController implements Initializable {
 
     MinesweeperMain main;
 
     @FXML private StackPane sPane;
     @FXML private Label mineCounter;
-    @FXML private Button menuButton;
-    @FXML private Button restartButton;
     private GridPane grid;
 
     @Override
@@ -73,7 +67,7 @@ public class MainGameController implements Initializable {
 
     public void goBackToMenuButton(MouseEvent mouseEvent) throws IOException {
         if (mouseEvent.getButton() == MouseButton.PRIMARY) {
-            Parent mainMenu = FXMLLoader.load(getClass().getResource("MainMenu.fxml"));
+            Parent mainMenu = FXMLLoader.load(getClass().getResource("Menu.fxml"));
             Scene mainMenuScene = new Scene(mainMenu);
 
             Stage window = (Stage) ((Node)mouseEvent.getSource()).getScene().getWindow();

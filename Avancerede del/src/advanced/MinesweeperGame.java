@@ -10,8 +10,7 @@ public final class MinesweeperGame {
     private static int minesLeft;
     private static boolean gameOver;
     private static boolean hasPlacedMines;
-    private static MinesweeperMain main;
-    private static MainGameController controller;
+    private static GameController controller;
 
     public static void constructGame(int gridWidth, int gridHeight, int nMines) {
         MinesweeperGame.gridWidth = gridWidth;
@@ -25,11 +24,7 @@ public final class MinesweeperGame {
         minesLeft = nMines;
     }
 
-    public static void setMain(MinesweeperMain main) {
-        MinesweeperGame.main = main;
-    }
-
-    public static void setController(MainGameController controller) {
+    public static void setController(GameController controller) {
         MinesweeperGame.controller = controller;
     }
 
