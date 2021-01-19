@@ -20,7 +20,7 @@ public class MinesweeperMain extends Application {
 
 		primaryStage.setTitle("Minesweeper");
 		primaryStage.setResizable(false);
-		Image logo = new Image("Flag.png");
+		Image logo = new Image(getClass().getResource("Flag.png").toString());
 		primaryStage.getIcons().add(logo);
 
 		Parent menu = FXMLLoader.load(getClass().getResource("Menu.fxml"));

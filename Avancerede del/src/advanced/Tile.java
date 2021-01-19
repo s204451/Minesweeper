@@ -2,6 +2,7 @@ package advanced;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.net.URL;
 import java.util.List;
 
 import javafx.geometry.Pos;
@@ -99,19 +100,13 @@ public class Tile extends StackPane {
 
 	// Mikkel
 	public void addFlag() {
-		try {
-			FileInputStream inputstream = new FileInputStream("src/Flag.png");
-			Image img = new Image(inputstream);
+		// Have to use getResource in order for jar to work properly
+		Image img = new Image(getClass().getResource("Flag.png").toString());
+		flag = new ImageView();
+		flag.setImage(img);
 
-			flag = new ImageView();
-			flag.setImage(img);
-
-			flag.setVisible(false);
-			this.getChildren().add(flag);
-
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
+		flag.setVisible(false);
+		this.getChildren().add(flag);
 	}
 
 	// Place/remove flag and update minecounter
@@ -160,20 +155,14 @@ public class Tile extends StackPane {
 	public void addMine() {
 		hasMine = true;
 
-		FileInputStream inputstream;
-		try {
-			inputstream = new FileInputStream("src/Mine.png");
-			Image img = new Image(inputstream);
+		Image img = new Image(getClass().getResource("Mine.png").toString());
 
-			mine = new ImageView();
-			mine.setImage(img);
+		mine = new ImageView();
+		mine.setImage(img);
 
-			mine.setVisible(false);
+		mine.setVisible(false);
 
-			this.getChildren().add(mine);
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
+		this.getChildren().add(mine);
 	}
 
 	// Jakob
