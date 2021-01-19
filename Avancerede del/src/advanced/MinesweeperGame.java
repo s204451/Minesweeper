@@ -144,6 +144,7 @@ public final class MinesweeperGame {
 			}
 		}
 	}
+	
 	// Jakob
 	public static void countMinesLeft(boolean isFlagged) {
 		minesLeft += isFlagged ? -1 : 1;

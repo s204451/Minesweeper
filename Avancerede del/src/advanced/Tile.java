@@ -143,7 +143,7 @@ public class Tile extends StackPane {
 				}
 			}
 			// Open surrounding tiles if tile is blank
-			if (isEmpty) {
+			if (isEmpty && !MinesweeperGame.isGameOver()) {
 				MinesweeperGame.revealNonMines(x, y);
 			}
 			if (text != null)
