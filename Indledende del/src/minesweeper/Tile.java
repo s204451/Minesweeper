@@ -12,20 +12,22 @@ import javafx.scene.text.Text;
 
 public class Tile extends StackPane {
 	private boolean hasMine;
-	private boolean hasFlag;
 	private Text text;
 	private Ellipse mine;
 	private Ellipse flag;
 	private Rectangle innerRect;
 	private Rectangle outerRect;
 
+	// Bjørn
 	public Tile() {
 		this.setPrefSize(20, 20);
 
+		// Inner darker rectangle
 		innerRect = new Rectangle(this.getPrefWidth() - 1, this.getPrefWidth() - 1);
 		innerRect.setFill(Color.rgb(150, 150, 150));
 		innerRect.setStroke(Color.BLACK);
 
+		// Outer rectangle which hides the inside rectangle
 		outerRect = new Rectangle(this.getPrefWidth() - 2, this.getPrefWidth() - 2);
 		outerRect.setFill(Color.rgb(198, 198, 198));
 		StackPane.setAlignment(outerRect, Pos.TOP_LEFT);
@@ -37,11 +39,14 @@ public class Tile extends StackPane {
 		this.setOnMouseClicked(e -> handleClicked(e));
 	}
 
+	// Bjørn
 	private void handleClicked(MouseEvent e) {
 		if (e.getButton() == MouseButton.PRIMARY) {
+			// Opens tile
 			makeVisible();
 			MinesweeperGame.checkForWin();
 		} else if (e.getButton() == MouseButton.SECONDARY) {
+			// Placed/removes flag
 			if (outerRect.isVisible()) {
 				flag.setVisible(!flag.isVisible());
 			}
@@ -51,32 +56,33 @@ public class Tile extends StackPane {
 	public boolean hasMine() {
 		return hasMine;
 	}
-	
-	
+
 	public boolean isRectVisible() {
 		return outerRect.isVisible();
 	}
 
+	// Aryan
 	public void addFlag() {
 		flag = new Ellipse(this.getPrefWidth() * 0.5, this.getPrefHeight() * 0.5, this.getPrefWidth() * 0.25,
 				this.getPrefHeight() * 0.45);
 		flag.setFill(Color.rgb(0, 143, 15));
 		flag.setVisible(false);
 		this.getChildren().add(flag);
-		hasFlag = true;
-
 	}
-	
+
 	public void displayWrongFlag() {
-		if(mine == null && hasFlag){
+		if (!hasMine && flag.isVisible()) {
 			flag.setFill(Color.RED);
 		}
 	}
 
+	// Bjørn
+	// Opens a tile if it is not already
 	public void makeVisible() {
 		if (outerRect.isVisible() && !flag.isVisible()) {
 			outerRect.setVisible(false);
-			if (mine != null) {
+			// If mine is pressed
+			if (hasMine) {
 				mine.setVisible(true);
 				if (!MinesweeperGame.isGameOver()) {
 					innerRect.setFill(Color.RED);
@@ -88,6 +94,7 @@ public class Tile extends StackPane {
 		}
 	}
 
+	// Bjørn
 	public void addMine() {
 		hasMine = true;
 
@@ -98,7 +105,10 @@ public class Tile extends StackPane {
 
 		this.getChildren().add(mine);
 	}
-	
+
+	// Jakob
+	// Add text on innerRect and change color depending of numeber of neighbour
+	// mines
 	public void setMinesNear(int minesNear) {
 		if (minesNear > 0) {
 
@@ -138,5 +148,5 @@ public class Tile extends StackPane {
 			text.setVisible(false);
 		}
 	}
-	
+
 }

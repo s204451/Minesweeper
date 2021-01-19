@@ -9,25 +9,24 @@ import javafx.scene.image.Image;
 
 public class MinesweeperMain extends Application {
 
-    public static void main(String[] args) {
-        launch();
-    }
+	public static void main(String[] args) {
+		launch();
+	}
 
-    @Override
-    public void start(Stage primaryStage) throws Exception {
+	// Aryan
+	// Creates and displays a scene for the main menu
+	@Override
+	public void start(Stage primaryStage) throws Exception {
 
-        primaryStage.setTitle("Minesweeper");
-        primaryStage.setResizable(false);
-        Image logo = new Image("Flag.png");
-        primaryStage.getIcons().add(logo);
+		primaryStage.setTitle("Minesweeper");
+		primaryStage.setResizable(false);
+		Image logo = new Image("Flag.png");
+		primaryStage.getIcons().add(logo);
 
-        Parent mainRoot = FXMLLoader.load(getClass().getResource("Game.fxml"));
-        Scene mainScene = new Scene(mainRoot);
-
-        Parent mainMenu = FXMLLoader.load(getClass().getResource("Menu.fxml"));
-        Scene mainMenuScene = new Scene(mainMenu);
-
-        primaryStage.setScene(mainMenuScene);
-        primaryStage.show();
-    }
+		Parent menu = FXMLLoader.load(getClass().getResource("Menu.fxml"));
+		Scene menuScene = new Scene(menu);
+		
+		primaryStage.setScene(menuScene);
+		primaryStage.show();
+	}
 }

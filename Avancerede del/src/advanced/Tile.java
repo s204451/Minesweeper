@@ -17,199 +17,211 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 public class Tile extends StackPane {
-    private int x, y;
-    private boolean hasMine;
-    private boolean isEmpty;
-    private Text text;
-    private ImageView mine;
-    private ImageView flag;
-    private Rectangle innerRect;
-    private Rectangle outerRect;
-    private List<Tile> neighbours;
+	private int x, y;
+	private boolean hasMine;
+	private boolean isEmpty;
+	private Text text;
+	private ImageView mine;
+	private ImageView flag;
+	private Rectangle innerRect;
+	private Rectangle outerRect;
+	private List<Tile> neighbours;
 
-    public Tile(int x, int y) {
-        this.x = x;
-        this.y = y;
+	// Bjørn
+	public Tile(int x, int y) {
+		this.x = x;
+		this.y = y;
 
-        this.setPrefSize(20, 20);
+		this.setPrefSize(20, 20);
 
-        innerRect = new Rectangle(this.getPrefWidth() - 1, this.getPrefWidth() - 1);
-        innerRect.setFill(Color.rgb(150, 150, 150));
-        innerRect.setStroke(Color.BLACK);
+		// Inner darker rectangle
+		innerRect = new Rectangle(this.getPrefWidth() - 1, this.getPrefWidth() - 1);
+		innerRect.setFill(Color.rgb(150, 150, 150));
+		innerRect.setStroke(Color.BLACK);
 
-        outerRect = new Rectangle(this.getPrefWidth() - 2, this.getPrefWidth() - 2);
-        outerRect.setFill(Color.rgb(198, 198, 198));
-        StackPane.setAlignment(outerRect, Pos.TOP_LEFT);
+		// Outer rectangle which hides the inside rectangle
+		outerRect = new Rectangle(this.getPrefWidth() - 2, this.getPrefWidth() - 2);
+		outerRect.setFill(Color.rgb(198, 198, 198));
+		StackPane.setAlignment(outerRect, Pos.TOP_LEFT);
 
-        this.getChildren().addAll(innerRect, outerRect);
+		this.getChildren().addAll(innerRect, outerRect);
 
-        addFlag();
+		addFlag();
 
-        this.setOnMouseClicked(e -> handleClicked(e));
-    }
+		this.setOnMouseClicked(e -> handleClicked(e));
+	}
 
-    private void handleClicked(MouseEvent e) {
-        if (e.getButton() == MouseButton.PRIMARY) {
-            if (!MinesweeperGame.hasPlacedMines()) {
-                MinesweeperGame.placeMines(x, y);
-                MinesweeperGame.addMineCount();
-            }
+	// Bjørn
+	private void handleClicked(MouseEvent e) {
+		if (e.getButton() == MouseButton.PRIMARY) {
+			// Place mines on first click
+			if (!MinesweeperGame.hasPlacedMines()) {
+				MinesweeperGame.placeMines(x, y);
+				MinesweeperGame.addMineCount();
+			}
 
-            makeVisible();
-            MinesweeperGame.checkForWin();
-        } else if (e.getButton() == MouseButton.SECONDARY) {
-            if (outerRect.isVisible()) {
-               	updateFlag();
-            }
-        }
-    }
+			makeVisible();
+			MinesweeperGame.checkForWin();
+		} else if (e.getButton() == MouseButton.SECONDARY) {
+			if (outerRect.isVisible()) {
+				updateFlag();
+			}
+		}
+	}
 
-    public int getX() {
-        return x;
-    }
+	public int getX() {
+		return x;
+	}
 
-    public int getY() {
-        return y;
-    }
+	public int getY() {
+		return y;
+	}
 
-    public boolean isEmpty() {
-        return isEmpty;
-    }
+	public boolean isEmpty() {
+		return isEmpty;
+	}
 
-    public boolean hasMine() {
-        return hasMine;
-    }
+	public boolean hasMine() {
+		return hasMine;
+	}
 
-    public boolean hasFlag() {
-        return flag.isVisible();
-    }
+	public boolean hasFlag() {
+		return flag.isVisible();
+	}
 
-    public boolean isRectVisible() {
-        return outerRect.isVisible();
-    }
+	public boolean isRectVisible() {
+		return outerRect.isVisible();
+	}
 
-    public List<Tile> getNeighbours() {
-        return neighbours;
-    }
+	public List<Tile> getNeighbours() {
+		return neighbours;
+	}
 
-    public void addFlag() {
-        try {
-            FileInputStream inputstream = new FileInputStream("Avancerede del/src/Flag.png");
-            Image img = new Image(inputstream);
+	// Mikkel
+	public void addFlag() {
+		try {
+			FileInputStream inputstream = new FileInputStream("src/Flag.png");
+			Image img = new Image(inputstream);
 
-            flag = new ImageView();
-            flag.setImage(img);
+			flag = new ImageView();
+			flag.setImage(img);
 
-            flag.setVisible(false);
-            this.getChildren().add(flag);
+			flag.setVisible(false);
+			this.getChildren().add(flag);
 
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+	}
 
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-    }
+	// Place/remove flag and update minecounter
+	public void updateFlag() {
+		flag.setVisible(!flag.isVisible());
+		MinesweeperGame.countMinesLeft(flag.isVisible());
+	}
 
-    public void updateFlag() {
-        flag.setVisible(!flag.isVisible());
-        MinesweeperGame.countMinesLeft(flag.isVisible());
-    }
-
-    public void displayWrongFlag() {
+	// Aryan
+	public void displayWrongFlag() {
 		// Draws 'X' when flag is placed wrong
-        if (mine == null && flag.isVisible()) {
-            Line line1 = new Line(3, 3, this.getWidth() - 5, this.getHeight() - 5);
-            Line line2 = new Line(this.getWidth() - 5, 3, 3, this.getHeight() - 5);
-            line1.setStroke(Color.RED);
-            line2.setStroke(Color.RED);
-            line1.setStrokeWidth(4);
-            line2.setStrokeWidth(4);
-            this.getChildren().addAll(line1, line2);
-        }
-    }
+		if (mine == null && flag.isVisible()) {
+			Line line1 = new Line(3, 3, this.getWidth() - 5, this.getHeight() - 5);
+			Line line2 = new Line(this.getWidth() - 5, 3, 3, this.getHeight() - 5);
+			line1.setStroke(Color.RED);
+			line2.setStroke(Color.RED);
+			line1.setStrokeWidth(4);
+			line2.setStrokeWidth(4);
+			this.getChildren().addAll(line1, line2);
+		}
+	}
 
-    public void makeVisible() {
+	// Bjørn
+	// Opens a tile if it is not already
+	public void makeVisible() {
+		if (outerRect.isVisible() && !flag.isVisible()) {
+			outerRect.setVisible(false);
+			// If mine is pressed
+			if (mine != null) {
+				mine.setVisible(true);
+				if (!MinesweeperGame.isGameOver()) {
+					innerRect.setFill(Color.RED);
+					MinesweeperGame.gameOver();
+				}
+			}
+			// Open surrounding tiles if tile is blank
+			if (isEmpty) {
+				MinesweeperGame.revealNonMines(x, y);
+			}
+			if (text != null)
+				text.setVisible(true);
+		}
+	}
 
-        if (outerRect.isVisible() && !flag.isVisible()) {
-            outerRect.setVisible(false);
-            if (mine != null) {
-                mine.setVisible(true);
-                if (!MinesweeperGame.isGameOver()) {
-                    innerRect.setFill(Color.RED);
-                    MinesweeperGame.gameOver();
-                }
-            }
-            if (isEmpty) {
-                MinesweeperGame.revealNonMines(x, y);
-            }
-            if (text != null)
-                text.setVisible(true);
-        }
-    }
+	// Mikkel
+	public void addMine() {
+		hasMine = true;
 
-    public void addMine() {
-        hasMine = true;
+		FileInputStream inputstream;
+		try {
+			inputstream = new FileInputStream("src/Mine.png");
+			Image img = new Image(inputstream);
 
-        FileInputStream inputstream;
-        try {
-            inputstream = new FileInputStream("Avancerede del/src/Mine.png");
-            Image img = new Image(inputstream);
+			mine = new ImageView();
+			mine.setImage(img);
 
-            mine = new ImageView();
-            mine.setImage(img);
+			mine.setVisible(false);
 
-            mine.setVisible(false);
+			this.getChildren().add(mine);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+	}
 
-            this.getChildren().add(mine);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+	// Jakob
+	// Add text on innerRect and change color depending of number of neighbour mines
+	public void setMinesNear(int minesNear) {
+		if (minesNear > 0) {
 
-    }
+			text = new Text("" + minesNear);
 
-    public void setMinesNear(int minesNear) {
-        if (minesNear > 0) {
+			this.getChildren().add(text);
 
-            text = new Text("" + minesNear);
+			text.setFont(new Font("Segoe UI Black", 14));
 
-            this.getChildren().add(text);
+			switch (minesNear) {
+			case 1:
+				text.setFill(Color.BLUE);
+				break;
+			case 2:
+				text.setFill(Color.GREEN);
+				break;
+			case 3:
+				text.setFill(Color.RED);
+				break;
+			case 4:
+				text.setFill(Color.DARKBLUE);
+				break;
+			case 5:
+				text.setFill(Color.DARKRED);
+				break;
+			case 6:
+				text.setFill(Color.TEAL);
+				break;
+			case 7:
+				text.setFill(Color.BLACK);
+				break;
+			case 8:
+				text.setFill(Color.PURPLE);
+				break;
+			}
 
-            text.setFont(new Font("Segoe UI Black", 14));
+			text.setVisible(false);
+		} else {
+			isEmpty = true;
+		}
+	}
 
-            switch (minesNear) {
-                case 1:
-                    text.setFill(Color.BLUE);
-                    break;
-                case 2:
-                    text.setFill(Color.GREEN);
-                    break;
-                case 3:
-                    text.setFill(Color.RED);
-                    break;
-                case 4:
-                    text.setFill(Color.DARKBLUE);
-                    break;
-                case 5:
-                    text.setFill(Color.DARKRED);
-                    break;
-                case 6:
-                    text.setFill(Color.TEAL);
-                    break;
-                case 7:
-                    text.setFill(Color.BLACK);
-                    break;
-                case 8:
-                    text.setFill(Color.PURPLE);
-                    break;
-            }
-
-            text.setVisible(false);
-        } else {
-            isEmpty = true;
-        }
-    }
-
-    public void setNeighbours(List<Tile> neighbours) {
-        this.neighbours = neighbours;
-    }
+	public void setNeighbours(List<Tile> neighbours) {
+		this.neighbours = neighbours;
+	}
 
 }

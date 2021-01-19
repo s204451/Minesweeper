@@ -4,7 +4,7 @@ public final class MinesweeperGame {
 	private static int gridWidth;
 	private static int gridHeight;
 	private static int nMines;
-	private static boolean gameOver;
+	private static boolean isGameOver;
 	private static MinesweeperMain main;
 
 	public static void constructGame(int gridWidth, int gridHeight, int nMines) {
@@ -18,7 +18,7 @@ public final class MinesweeperGame {
 	}
 
 	public static boolean isGameOver() {
-		return gameOver;
+		return isGameOver;
 	}
 
 	public static int getGridWidth() {
@@ -29,6 +29,7 @@ public final class MinesweeperGame {
 		return gridHeight;
 	}
 
+	// Mikkel
 	public static Tile[][] makeTiles() {
 		// Initialize tiles
 		Tile[][] tiles = new Tile[gridHeight][gridWidth];
@@ -52,6 +53,8 @@ public final class MinesweeperGame {
 		return tiles;
 	}
 
+	// Jakob
+	// Count and add number of neighbour mines for every tile
 	public static void addMineCount(Tile[][] tiles) {
 		for (int y = 0; y < tiles.length; y++) {
 			for (int x = 0; x < tiles[y].length; x++) {
@@ -76,8 +79,11 @@ public final class MinesweeperGame {
 		}
 	}
 
+	// Aryan
+	// Checks if all tiles without mines are opened and then displays You Won on the
+	// screen
 	public static void checkForWin() {
-		if (!gameOver) {
+		if (!isGameOver) {
 			Tile[][] tiles = main.getTiles();
 			int counter = 0;
 			for (int i = 0; i < tiles.length; i++) {
@@ -95,8 +101,10 @@ public final class MinesweeperGame {
 
 	}
 
+	// Jakob
+	// Makes every tile visible and shows if a flag is placed wrong
 	public static void gameOver() {
-		gameOver = true;
+		isGameOver = true;
 
 		Tile[][] tiles = main.getTiles();
 		for (int i = 0; i < tiles.length; i++) {

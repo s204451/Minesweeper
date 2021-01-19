@@ -22,81 +22,89 @@ import java.util.ResourceBundle;
 
 public class GameController implements Initializable {
 
-    MinesweeperMain main;
+	MinesweeperMain main;
 
-    @FXML private StackPane sPane;
-    @FXML private Label mineCounter;
-    private GridPane grid;
+	@FXML
+	private StackPane sPane;
+	@FXML
+	private Label mineCounter;
+	private GridPane grid;
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
+	@Override
+	public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        MinesweeperGame.setController(this);
+		MinesweeperGame.setController(this);
 
-        startNewGame();
-    }
+		startNewGame();
+	}
 
-    public Tile[][] getTiles() {
-        Tile[][] tiles = new Tile[MinesweeperGame.getGridHeight()][MinesweeperGame.getGridWidth()];
-        for (Node node : grid.getChildren()) {
-            int y = GridPane.getRowIndex(node);
-            int x = GridPane.getColumnIndex(node);
+	public Tile[][] getTiles() {
+		Tile[][] tiles = new Tile[MinesweeperGame.getGridHeight()][MinesweeperGame.getGridWidth()];
+		for (Node node : grid.getChildren()) {
+			int y = GridPane.getRowIndex(node);
+			int x = GridPane.getColumnIndex(node);
 
-            tiles[y][x] = (Tile) node;
-        }
-        return tiles;
-    }
+			tiles[y][x] = (Tile) node;
+		}
+		return tiles;
+	}
 
-    public void stopGame() {
-        sPane.setDisable(true);
-    }
+	// Disables mouseinput for the StackPane
+	public void stopGame() {
+		sPane.setDisable(true);
+	}
 
-    public void displayWonText() {
-        Text wonText = new Text("You Won!");
-        wonText.setFont(new Font("Impact", MinesweeperGame.getGridWidth() * 4));
-        wonText.setFill(Color.RED);
-        sPane.getChildren().add(wonText);
-    }
+	public void displayWonText() {
+		Text wonText = new Text("You Won!");
+		wonText.setFont(new Font("Impact", MinesweeperGame.getGridWidth() * 4));
+		wonText.setFill(Color.RED);
+		sPane.getChildren().add(wonText);
+	}
 
-    public void handleRestartButton(MouseEvent mouseEvent) {
-        if (mouseEvent.getButton() == MouseButton.PRIMARY) {
-            startNewGame();
-        }
+	// Aryan
+	// Calls startNewGame to restart when it's clicked
+	public void handleRestartButton(MouseEvent mouseEvent) {
+		if (mouseEvent.getButton() == MouseButton.PRIMARY) {
+			startNewGame();
+		}
+	}
 
-    }
+	// Aryan
+	// Changes scene to main menu
+	public void handleMenuButton(MouseEvent mouseEvent) throws IOException {
+		if (mouseEvent.getButton() == MouseButton.PRIMARY) {
+			Parent menu = FXMLLoader.load(getClass().getResource("Menu.fxml"));
+			Scene menuScene = new Scene(menu);
 
-    public void goBackToMenuButton(MouseEvent mouseEvent) throws IOException {
-        if (mouseEvent.getButton() == MouseButton.PRIMARY) {
-            Parent mainMenu = FXMLLoader.load(getClass().getResource("Menu.fxml"));
-            Scene mainMenuScene = new Scene(mainMenu);
+			Stage window = (Stage) ((Node) mouseEvent.getSource()).getScene().getWindow();
+			window.setScene(menuScene);
+			window.show();
+		}
+	}
 
-            Stage window = (Stage) ((Node)mouseEvent.getSource()).getScene().getWindow();
-            window.setScene(mainMenuScene);
-            window.show();
-        }
-    }
+	// Bjørn
+	// Is called when restart button is clicked
+	// Creates a new game
+	public void startNewGame() {
+		sPane.setDisable(false);
 
-    public void startNewGame() {
-        sPane.setDisable(false);
+		grid = new GridPane();
 
-        grid = new GridPane();
+		Tile[][] tiles = MinesweeperGame.makeTiles();
 
-        Tile[][] tiles = MinesweeperGame.makeTiles();
-
-        // Add tiles to GridPane
-        for (int i = 0; i < tiles.length; i++) {
-            for (int j = 0; j < tiles[i].length; j++) {
-                grid.add(tiles[i][j], j, i);
-            }
-        }
-        sPane.getChildren().add(grid);
+		// Adds tiles to GridPane
+		for (int i = 0; i < tiles.length; i++) {
+			for (int j = 0; j < tiles[i].length; j++) {
+				grid.add(tiles[i][j], j, i);
+			}
+		}
+		sPane.getChildren().add(grid);
 
 		MinesweeperGame.restartGame();
-        updateCounter(MinesweeperGame.getNMines());
-    }
+		updateCounter(MinesweeperGame.getNMines());
+	}
 
 	public void updateCounter(int minesLeft) {
 		mineCounter.setText("MINES LEFT: " + minesLeft);
 	}
 }
-
