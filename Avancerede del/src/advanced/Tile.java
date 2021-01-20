@@ -1,8 +1,5 @@
 package advanced;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.net.URL;
 import java.util.List;
 
 import javafx.geometry.Pos;
@@ -109,34 +106,14 @@ public class Tile extends StackPane {
 		this.getChildren().add(flag);
 	}
 
-	// Place/remove flag and update minecounter
-	public void updateFlag() {
-		flag.setVisible(!flag.isVisible());
-		MinesweeperGame.countMinesLeft(flag.isVisible());
-	}
-
-	// Aryan
-	public void displayWrongFlag() {
-		// Draws 'X' when flag is placed wrong
-		if (mine == null && flag.isVisible()) {
-			Line line1 = new Line(3, 3, this.getWidth() - 5, this.getHeight() - 5);
-			Line line2 = new Line(this.getWidth() - 5, 3, 3, this.getHeight() - 5);
-			line1.setStroke(Color.RED);
-			line2.setStroke(Color.RED);
-			line1.setStrokeWidth(4);
-			line2.setStrokeWidth(4);
-			this.getChildren().addAll(line1, line2);
-		}
-	}
-
 	// Bjørn
 	// Opens a tile if it is not already
 	public void makeVisible() {
 		if (outerRect.isVisible() && !flag.isVisible()) {
 			outerRect.setVisible(false);
-			// If mine is pressed
-			if (mine != null) {
+			if (hasMine) {
 				mine.setVisible(true);
+				// If mine is clicked
 				if (!MinesweeperGame.isGameOver()) {
 					innerRect.setFill(Color.RED);
 					MinesweeperGame.gameOver();
@@ -151,6 +128,26 @@ public class Tile extends StackPane {
 		}
 	}
 
+	// Place/remove flag and update minecounter
+	public void updateFlag() {
+		flag.setVisible(!flag.isVisible());
+		MinesweeperGame.countMinesLeft(flag.isVisible());
+	}
+	
+	// Aryan
+	public void displayWrongFlag() {
+		// Draws 'X' when flag is placed wrong
+		if (mine == null && flag.isVisible()) {
+			Line line1 = new Line(3, 3, this.getWidth() - 5, this.getHeight() - 5);
+			Line line2 = new Line(this.getWidth() - 5, 3, 3, this.getHeight() - 5);
+			line1.setStroke(Color.RED);
+			line2.setStroke(Color.RED);
+			line1.setStrokeWidth(4);
+			line2.setStrokeWidth(4);
+			this.getChildren().addAll(line1, line2);
+		}
+	}
+	
 	// Mikkel
 	public void addMine() {
 		hasMine = true;
