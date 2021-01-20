@@ -10,6 +10,9 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+// Extends JavaFX' Application
+// Operates the visual aspect of the program
+
 public class MinesweeperMain extends Application {
 
 	private StackPane root;

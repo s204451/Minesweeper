@@ -3,6 +3,9 @@ package advanced;
 import java.util.ArrayList;
 import java.util.List;
 
+// Static class which holds game variables and general game functions
+// It operates the logic behind the program
+
 public final class MinesweeperGame {
 	private static int gridWidth;
 	private static int gridHeight;
@@ -146,6 +149,7 @@ public final class MinesweeperGame {
 	}
 	
 	// Jakob
+	//Updates minesLeft depending on number of flags
 	public static void countMinesLeft(boolean isFlagged) {
 		minesLeft += isFlagged ? -1 : 1;
 		controller.updateCounter(minesLeft);

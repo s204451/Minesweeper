@@ -18,6 +18,9 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+// Connected to Menu.fxml
+// Controls the main menu
+
 public class MenuController implements Initializable {
 	@FXML
 	private TextField widthTextField;

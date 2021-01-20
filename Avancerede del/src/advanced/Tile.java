@@ -14,6 +14,9 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
+// Defines a single tile of the grid
+// Controls users interaction with the tiles
+
 public class Tile extends StackPane {
 	private int x, y;
 	private boolean hasMine;

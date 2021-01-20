@@ -10,6 +10,9 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
+// Defines a single tile of the grid
+// Controls users interaction with the tiles
+
 public class Tile extends StackPane {
 	private boolean hasMine;
 	private Text text;
@@ -107,8 +110,7 @@ public class Tile extends StackPane {
 	}
 
 	// Jakob
-	// Add text on innerRect and change color depending of numeber of neighbour
-	// mines
+	// Add text on innerRect and change color depending of number of neighbour mines
 	public void setMinesNear(int minesNear) {
 		if (minesNear > 0) {
 

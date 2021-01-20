@@ -7,6 +7,9 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 
+// Extends JavaFX' Application
+// Creates the first stage window 
+
 public class MinesweeperMain extends Application {
 
 	public static void main(String[] args) {
@@ -25,7 +28,7 @@ public class MinesweeperMain extends Application {
 
 		Parent menu = FXMLLoader.load(getClass().getResource("Menu.fxml"));
 		Scene menuScene = new Scene(menu);
-		
+
 		primaryStage.setScene(menuScene);
 		primaryStage.show();
 	}

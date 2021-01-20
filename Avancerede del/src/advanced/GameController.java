@@ -20,6 +20,9 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+// Connected to Game.fxml
+// Controls the game
+
 public class GameController implements Initializable {
 
 	MinesweeperMain main;

@@ -1,5 +1,8 @@
 package src.minesweeper;
 
+// Static class which holds game variables and general game functions
+// It operates the logic behind the program
+
 public final class MinesweeperGame {
 	private static int gridWidth;
 	private static int gridHeight;
